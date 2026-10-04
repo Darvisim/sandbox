@@ -1,0 +1,21 @@
+name: Sandbox
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-ios-simulator:
+    name: test (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15, macos-26]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v7
+    - uses: futureware-tech/simulator-action@v6
+      with:
+        os: 'iOS'
+        os_version: ">=18.0"
+        wait_for_boot: true
+        settle_timeout_seconds: 360

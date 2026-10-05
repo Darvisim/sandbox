@@ -5,11 +5,12 @@ on:
 
 jobs:
   test-ios-simulator:
-    name: test (${{ matrix.os }})
+    name: test (${{ matrix.os }}, ${{ matrix.samples }})
     strategy:
       fail-fast: false
       matrix:
         os: [macos-15, macos-26]
+        samples: [3, 5, 10]
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v7
@@ -19,3 +20,4 @@ jobs:
         os_version: ">=18.0"
         wait_for_boot: true
         settle_timeout_seconds: 360
+        settle_consecutive_samples: ${{ matrix.samples }}

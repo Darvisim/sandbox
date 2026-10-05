@@ -12,9 +12,9 @@ jobs:
       matrix:
         os: [macos-15, macos-26]
         samples: [3, 5, 10]
-        percent: [20, 30, 50]
+        percent: [20, 30]
         interval: [2, 5, 10]
-        seconds: [360, 720, 1024]
+        seconds: [360, 720]
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v7

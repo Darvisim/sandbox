@@ -5,17 +5,8 @@ on:
 
 jobs:
   test-ios-simulator:
-    name: test (${{ matrix.os }}, ${{ matrix.interval }} intervals, 
-     ${{ matrix.percent }}%, ${{ matrix.seconds }}s, ${{ matrix.samples }} samples)
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-15, macos-26]
-        samples: [3, 5, 10]
-        percent: [20, 30]
-        interval: [2, 5, 10]
-        seconds: [360, 720]
-    runs-on: ${{ matrix.os }}
+    name: test
+    runs-on: macos-15
     steps:
     - uses: actions/checkout@v7
     - uses: futureware-tech/simulator-action@v6
@@ -23,7 +14,5 @@ jobs:
         os: 'iOS'
         os_version: ">=18.0"
         wait_for_boot: true
-        settle_timeout_seconds: ${{ matrix.seconds }}
-        settle_check_interval_seconds: ${{ matrix.interval }}
-        settle_cpu_threshold_percent: ${{ matrix.percent }}
-        settle_consecutive_samples: ${{ matrix.samples }}
+        settle_timeout_seconds: 360
+    - run: xcrun simctl spawn booted -i

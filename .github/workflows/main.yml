@@ -15,4 +15,7 @@ jobs:
         os_version: ">=18.0"
         wait_for_boot: true
         settle_timeout_seconds: 360
-    - run: xcrun simctl spawn booted -i
+    - run: |
+        echo "pwd" > script.sh
+        cat script.sh
+        xcrun simctl spawn booted sh -c "$PWD/script.sh"

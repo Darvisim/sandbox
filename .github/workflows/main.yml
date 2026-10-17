@@ -16,4 +16,4 @@ jobs:
     - run: |
         SIM_HOME="$(xcrun simctl getenv booted HOME)"
         echo 'echo "hello"' > "$SIM_HOME/script.sh"
-        xcrun simctl spawn booted /bin/sh "$SIM_HOME/script.sh"
+        xcrun simctl spawn booted /bin/bash "$SIM_HOME/script.sh"

@@ -13,7 +13,6 @@ jobs:
       with:
         os: 'iOS'
         os_version: ">=18.0"
-        wait_for_boot: true
     - run: |
-        cd $(xcrun simctl getenv booted HOME)
-        xcrun simctl spawn booted ls -la
+        xcrun simctl getenv booted HOME
+        xcrun simctl spawn booted ls -la /

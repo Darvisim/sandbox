@@ -14,10 +14,6 @@ jobs:
         os: 'iOS'
         os_version: ">=18.0"
     - run: |
-        xcrun simctl spawn booted /bin/sh -c '
-        echo "PATH=$PATH"
-        echo "Home directory:"
-        cd "$HOME" && pwd
-        echo "Root directory:"
-        cd / && pwd
-        '
+        SIM_HOME="$(xcrun simctl getenv booted HOME)"
+        echo 'echo "hello"' > "$SIM_HOME/script.sh"
+        xcrun simctl spawn booted /bin/sh "$SIM_HOME/script.sh"

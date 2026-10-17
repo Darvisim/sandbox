@@ -16,6 +16,4 @@ jobs:
         wait_for_boot: true
         settle_timeout_seconds: 360
     - run: |
-        echo "pwd" > script.sh
-        cat script.sh
-        xcrun simctl spawn booted sh -c "$PWD/script.sh"
+        xcrun simctl spawn booted sh -c "ls -la"

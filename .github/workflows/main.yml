@@ -14,5 +14,4 @@ jobs:
         os: 'iOS'
         os_version: ">=18.0"
     - run: |
-        xcrun simctl getenv booted HOME
-        xcrun simctl spawn booted ls -la /
+        xcrun simctl spawn booted /bin/sh -c 'echo "shell works"; pwd; ls -la /'

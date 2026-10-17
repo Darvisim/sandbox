@@ -14,4 +14,10 @@ jobs:
         os: 'iOS'
         os_version: ">=18.0"
     - run: |
-        xcrun simctl spawn booted /bin/sh -c 'echo "shell works"; pwd; ls -la /'
+        xcrun simctl spawn booted /bin/sh -c '
+        echo "PATH=$PATH"
+        echo "Home directory:"
+        cd "$HOME" && pwd
+        echo "Root directory:"
+        cd / && pwd
+        '

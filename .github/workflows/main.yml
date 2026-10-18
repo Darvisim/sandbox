@@ -15,13 +15,11 @@ jobs:
         os_version: ">=18.0"
     - run: |
         xcrun simctl spawn booted /bin/sh -c '
-          for cmd in /bin/mkdir /bin/ls /bin/cat \
-                     /usr/bin/awk /usr/bin/grep /usr/bin/sed \
-                     /usr/bin/find /usr/bin/touch; do
-            if test -x "$cmd"; then
-              printf "%s exists and is executable\n" "$cmd"
-            else
-              printf "%s is not executable\n" "$cmd"
-            fi
-          done
+          /bin/mkdir /tmp/posix-bootstrap-test &&
+          printf "mkdir works\n"
+
+          /bin/ls /tmp
+
+          /bin/rmdir /tmp/posix-bootstrap-test &&
+          printf "rmdir works\n"
         '

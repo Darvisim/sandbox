@@ -6,7 +6,7 @@ on:
 jobs:
   test-ios-simulator:
     name: test
-    runs-on: macos-26
+    runs-on: macos-15
     steps:
     - uses: actions/checkout@v7
     - uses: futureware-tech/simulator-action@v6
@@ -14,7 +14,7 @@ jobs:
         os: 'iOS'
         os_version: ">=18.0"
     - run: |
-        xcrun simctl spawn booted /bin/sh -c '
+        xcrun simctl spawn booted /usr/bin/arch -arm64 /bin/sh -c '
           /usr/bin/uname -a
           /usr/bin/git --version
           /usr/bin/clang --version

@@ -178,5 +178,6 @@ jobs:
             if command -v "$cmd" >/dev/null 2>&1; then
               printf "%s is available!\n" "$cmd"
               command -V "$cmd"
+            fi
           done
         '

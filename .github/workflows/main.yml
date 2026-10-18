@@ -15,13 +15,8 @@ jobs:
         os_version: ">=18.0"
     - run: |
         xcrun simctl spawn booted /bin/sh -c '
-          for dir in /usr/local/bin /usr/local/sbin /opt/bin /opt/sbin; do
-            [ -d "$dir" ] || continue
-
-            for cmd in admin cflow cxref delta get gettext msgfmt ngettext prs rmdel sact sccs timeout unget val xgettext; do
-              if [ -x "$dir/$cmd" ] && [ -f "$dir/$cmd" ]; then
-                printf "FOUND   %-12s %s\n" "$cmd" "$dir/$cmd"
-              fi
-            done
-          done
+          /usr/bin/uname -a
+          /usr/bin/git --version
+          /usr/bin/clang --version
+          /usr/bin/curl --version
         '

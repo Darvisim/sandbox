@@ -15,22 +15,20 @@ jobs:
         os_version: ">=18.0"
     - run: |
         xcrun simctl spawn booted /bin/sh -c '
-          printf "Current directory: "
-          pwd
-        
-          printf "\nChecking root directory:\n"
-          for path in / /bin /tmp /var/tmp; do
-            if test -d "$path"; then
-              printf "%s exists\n" "$path"
+          for path in . /tmp /var/tmp; do
+            if test -w "$path"; then
+              printf "%s is writable\n" "$path"
             else
-              printf "%s does not exist\n" "$path"
+              printf "%s is not writable\n" "$path"
             fi
           done
         
-          printf "\nChecking whether /bin is writable:\n"
-          if test -w /bin; then
-            printf "/bin is writable\n"
-          else
-            printf "/bin is not writable\n"
+          if test -w .; then
+            if ( : > ./write-test ); then
+              printf "File creation succeeded\n"
+              rm ./write-test 2>/dev/null || true
+            else
+              printf "File creation failed\n"
+            fi
           fi
         '

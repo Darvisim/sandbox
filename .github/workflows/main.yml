@@ -14,6 +14,6 @@ jobs:
         os: 'iOS'
         os_version: ">=18.0"
     - run: |
-        xcrun simctl spawn booted /bin/sh -c '
-          echo "hello"
-        '
+        export DYLD_FALLBACK_FRAMEWORK_PATH="$(xcrun --sdk iphonesimulator --show-sdk-path)/System/Library/Frameworks"
+        export DYLD_FALLBACK_LIBRARY_PATH="$(xcrun --sdk iphonesimulator --show-sdk-path)/usr/lib"
+        xcrun simctl spawn booted /bin/sh -c 'echo "hello"'

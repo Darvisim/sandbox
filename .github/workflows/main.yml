@@ -15,20 +15,10 @@ jobs:
         os_version: ">=18.0"
     - run: |
         xcrun simctl spawn booted /bin/sh -c '
-          for path in . /tmp /var/tmp; do
-            if test -w "$path"; then
-              printf "%s is writable\n" "$path"
-            else
-              printf "%s is not writable\n" "$path"
+          for cmd in install busybox toybox perl python3 ruby; do
+            if command -v "$cmd" >/dev/null 2>&1; then
+              printf "%s: " "$cmd"
+              command -V "$cmd"
             fi
           done
-        
-          if test -w .; then
-            if ( : > ./write-test ); then
-              printf "File creation succeeded\n"
-              rm ./write-test 2>/dev/null || true
-            else
-              printf "File creation failed\n"
-            fi
-          fi
         '

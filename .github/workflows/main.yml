@@ -14,7 +14,7 @@ jobs:
         os: 'iOS'
         os_version: ">=18.0"
     - run: |
-        xcrun simctl exec booted /bin/sh -c '
+        xcrun simctl spawn --env DYLD_LIBRARY_PATH=/usr/lib:/System/Library/Frameworks booted /bin/sh -c '
           /usr/bin/uname -a
           /usr/bin/git --version
           /usr/bin/clang --version

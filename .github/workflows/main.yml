@@ -19,7 +19,7 @@ jobs:
           /usr/bin/tar -xvzf cmake-3.12.3.tar.gz
           cd cmake-3.12.3
           ./configure --prefix=/usr/local
-          /usr/bin/make -j$(sysctl -n hw.ncpu)
-          /usr/bin/sudo /usr/bin/make install
-          cmake --version
+          /usr/bin/make -j$(/usr/sbin/sysctl -n hw.ncpu)
+          /usr/bin/make install
+          /usr/local/cmake --version
         '

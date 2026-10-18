@@ -56,8 +56,6 @@ jobs:
               return 127;
             }
           }
-        }
-        ' > sh.c
+        }' > sh.c
         xcrun -sdk iphonesimulator clang sh.c -o sh
-        export DYLD_FALLBACK_LIBRARY_PATH="$(xcrun --sdk iphonesimulator --show-sdk-path)/usr/lib"
         xcrun simctl spawn booted ./sh -c 'echo "hello"'

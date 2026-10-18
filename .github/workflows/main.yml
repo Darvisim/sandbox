@@ -14,7 +14,5 @@ jobs:
         os: 'iOS'
         os_version: ">=18.0"
     - run: |
-        xcrun simctl spawn booted '
-          SIM_DIR=$(xcrun simctl getenv booted /)
-          printf "$SIM_DIR"
-        '
+        PATH="$(xcrun simctl getenv booted PATH)"
+        printf "$PATH"

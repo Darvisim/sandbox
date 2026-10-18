@@ -15,10 +15,13 @@ jobs:
         os_version: ">=18.0"
     - run: |
         xcrun simctl spawn booted /bin/sh -c '
-          for cmd in install busybox toybox perl python3 ruby; do
-            if command -v "$cmd" >/dev/null 2>&1; then
-              printf "%s: " "$cmd"
-              command -V "$cmd"
-            fi
+          for dir in /bin /usr/bin /usr/sbin /sbin; do
+            printf "\n--- %s ---\n" "$dir"
+        
+            for cmd in "$dir"/*; do
+              if test -x "$cmd" && test ! -d "$cmd"; then
+                printf "%s\n" "$cmd"
+              fi
+            done
           done
         '

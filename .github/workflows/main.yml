@@ -14,23 +14,6 @@ jobs:
         os: 'iOS'
         os_version: ">=18.0"
     - run: |
-        SIM_PATH="$(xcrun simctl getenv booted PATH)"
-        echo "$SIM_PATH" | tr ':' '\n' | while read -r dir; do
-            [ -z "$dir" ] && continue
-        
-            echo "----------------------------------------"
-            echo "Directory: $dir"
-            echo "----------------------------------------"
-        
-            if [ -d "$dir" ]; then
-                for file in "$dir"/*; do
-                    if [ -x "$file" ] && [ -f "$file" ]; then
-                        basename "$file"
-                    fi
-                done
-            else
-                echo "Directory does not exist or cannot be accessed."
-            fi
-            echo ""
-        done
-
+        xcrun simctl spawn booted /bin/sh -c '
+          echo "hello"
+        '

@@ -14,6 +14,50 @@ jobs:
         os: 'iOS'
         os_version: ">=18.0"
     - run: |
-        export DYLD_FALLBACK_FRAMEWORK_PATH="$(xcrun --sdk iphonesimulator --show-sdk-path)/System/Library/Frameworks"
+        echo '
+        #include <stdio.h>
+        #include <stdlib.h>
+        #include <string.h>
+        #include <unistd.h>
+        #include <spawn.h>
+        #include <sys/wait.h>
+
+        extern char **environ;
+
+        int main(int argc, char *argv[])
+        {
+          if (argc >= 3 && strcmp(argv[1], "-c") == 0)
+          {
+            char *cmd = argv[2];
+        
+            char *args[64];
+            int i = 0;
+            char *token = strtok(cmd, " ");
+            while (token != NULL && i < 63)
+            {
+              args[i++] = token;
+              token = strtok(NULL, " ");
+            }
+            args[i] = NULL;
+
+            if (i == 0) return 0;
+
+            pid_t pid;
+            int status;
+        
+            if (posix_spawnp(&pid, args[0], NULL, NULL, args, environ) == 0)
+            {
+              waitpid(pid, &status, 0);
+              return WEXITSTATUS(status);
+            } 
+            else
+            {
+              perror("Execution failed");
+              return 127;
+            }
+          }
+        }
+        ' > sh.c
+        xcrun -sdk iphonesimulator clang sh.c -o sh
         export DYLD_FALLBACK_LIBRARY_PATH="$(xcrun --sdk iphonesimulator --show-sdk-path)/usr/lib"
-        xcrun simctl spawn booted /bin/sh -c 'echo "hello"'
+        xcrun simctl spawn booted ./sh -c 'echo "hello"'

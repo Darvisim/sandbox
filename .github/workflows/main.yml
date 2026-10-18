@@ -6,7 +6,7 @@ on:
 jobs:
   test-ios-simulator:
     name: test
-    runs-on: macos-26
+    runs-on: macos-15
     steps:
     - uses: actions/checkout@v7
     - uses: futureware-tech/simulator-action@v6
@@ -14,10 +14,12 @@ jobs:
         os: 'iOS'
         os_version: ">=18.0"
     - run: |
-        SIMCTL_CHILD_DYLD_LIBRARY_PATH=/usr/lib:/System/Library/Frameworks \
-          xcrun simctl spawn booted /bin/sh -c '
-          /usr/bin/uname -a
-          /usr/bin/git --version
-          /usr/bin/clang --version
-          /usr/bin/curl --version
+        xcrun simctl spawn booted /bin/sh -c '
+          /usr/bin/curl https://cmake.org/files/v3.12/cmake-3.12.3.tar.gz
+          /usr/bin/tar -xvzf cmake-3.12.3.tar.gz
+          /bin/cd cmake-3.12.3
+          ./configure --prefix=/usr
+          /usr/bin/make -j$(nproc)
+          /usr/bin/make install
+          cmake --version
         '

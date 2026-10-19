@@ -15,8 +15,9 @@ jobs:
         os_version: ">=18.0"
     - run: |
         xcrun simctl spawn booted /bin/sh -c '
-            ROOT=$(xcrun simctl getenv booted /)
-            for dir in $ROOT; do
-              printf "$dir\n"
-            done
+          export PATH="/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin"
+          ROOT=$(xcrun simctl getenv booted /)
+          for dir in $ROOT; do
+            printf "$dir\n"
+          done
         '

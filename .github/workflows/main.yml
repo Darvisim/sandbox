@@ -14,7 +14,11 @@ jobs:
         os: 'iOS'
         os_version: ">=18.0"
     - run: |
-        ROOT=$(xcrun simctl getenv booted ROOT)
-        for dir in $ROOT; do
-          printf "$dir\n"
+        ENV="HOME PATH TMPDIR"
+        for dir in $ENV; do
+          DIR=$(xcrun simctl getenv booted $ENV)
+          printf "--- $DIR ---"
+          for dir in $DIR; do
+            printf "$dir\n"
+          done
         done

@@ -20,20 +20,30 @@ jobs:
           echo "--- $var: $DIR ---"
           if [ -d "$DIR" ]; then
             for item in "$DIR"/*; do
-              [ -e "$item" ] && printf "%s\n" "$(basename "$item")"
+              if [ -e "$item" ]; then
+                printf "%s\n" "$(basename "$item")"
+              fi
             done
           else
             if [ "$var" = "PATH" ]; then
+              OLD_IFS="$IFS"
               IFS=':'
               for path in $DIR; do
-                echo "  Path entry: $path"
-                for item in "$path"/*; do
-                  [ -e "$item" ] && printf "%s\n" "$(basename "$item")"
-                done
+                if [ -n "$path" ]; then
+                  echo "  Path entry: $path"
+                  if [ -d "$path" ]; then
+                    for bin in "$path"/*; do
+                      if [ -e "$bin" ]; then
+                        printf "%s\n" "$(basename "$bin")"
+                      fi
+                    done
+                  fi
+                fi
               done
-              unset IFS
+              IFS="$OLD_IFS"
            else
               echo "Directory does not exist or is not accessible."
            fi
           fi
         done
+        exit 0

@@ -17,8 +17,8 @@ jobs:
         ENV="HOME PATH TMPDIR"
         for dir in $ENV; do
           DIR=$(xcrun simctl getenv booted $ENV)
-          printf "--- $DIR ---"
+          printf "--- %s ---" "$DIR"
           for dir in $DIR; do
-            printf "$dir\n"
+            printf "%s\n" "$dir"
           done
         done

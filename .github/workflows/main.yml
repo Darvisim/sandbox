@@ -15,10 +15,25 @@ jobs:
         os_version: ">=18.0"
     - run: |
         ENV="HOME PATH TMPDIR"
-        for dir in $ENV; do
-          DIR=$(xcrun simctl getenv booted $ENV)
-          echo "--- $DIR ---"
-          for dir in $DIR; do
-            printf "%s\n" "$dir"
-          done
+        for var in $ENV; do
+          DIR=$(xcrun simctl getenv booted "$var")
+          echo "--- $var: $DIR ---"
+          if [ -d "$DIR" ]; then
+            for item in "$DIR"/*; do
+              [ -e "$item" ] && printf "%s\n" "$(basename "$item")"
+            done
+          else
+            if [ "$var" = "PATH" ]; then
+              IFS=':'
+              for path in $DIR; do
+                echo "  Path entry: $path"
+                for item in "$path"/*; do
+                  [ -e "$item" ] && printf "%s\n" "$(basename "$item")"
+                done
+              done
+              unset IFS
+           else
+              echo "Directory does not exist or is not accessible."
+           fi
+          fi
         done

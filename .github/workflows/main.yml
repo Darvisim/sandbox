@@ -6,11 +6,17 @@ on:
 jobs:
   test-ios-simulator:
     name: test
-    runs-on: macos-latest
+    runs-on: macos-15
     steps:
     - uses: actions/checkout@v7
     - uses: futureware-tech/simulator-action@v6
       with:
         os: 'iOS'
         os_version: ">=18.0"
-    - run: xcrun simctl spawn booted /usr/bin/env
+    - run: |
+        xcrun simctl spawn booted /bin/sh -c '
+            ROOT=$(xcrun simctl getenv booted /)
+            for dir in $ROOT; do
+              printf "$dir\n"
+            done
+        '

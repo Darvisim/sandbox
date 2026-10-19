@@ -13,4 +13,4 @@ jobs:
       with:
         os: 'iOS'
         os_version: ">=18.0"
-    - run: xcrun simctl spawn booted sh -c 'echo "hello"'
+    - run: xcrun simctl spawn booted /usr/bin/env

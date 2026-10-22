@@ -14,36 +14,7 @@ jobs:
         os: 'iOS'
         os_version: ">=18.0"
     - run: |
-        ENV="HOME PATH TMPDIR"
-        for var in $ENV; do
-          DIR=$(xcrun simctl getenv booted "$var")
-          echo "--- $var: $DIR ---"
-          if [ -d "$DIR" ]; then
-            for item in "$DIR"/*; do
-              if [ -e "$item" ]; then
-                printf "%s\n" "$(basename "$item")"
-              fi
-            done
-          else
-            if [ "$var" = "PATH" ]; then
-              OLD_IFS="$IFS"
-              IFS=':'
-              for path in $DIR; do
-                if [ -n "$path" ]; then
-                  echo "  Path entry: $path"
-                  if [ -d "$path" ]; then
-                    for bin in "$path"/*; do
-                      if [ -e "$bin" ]; then
-                        printf "%s\n" "$(basename "$bin")"
-                      fi
-                    done
-                  fi
-                fi
-              done
-              IFS="$OLD_IFS"
-           else
-              echo "Directory does not exist or is not accessible."
-           fi
-          fi
-        done
-        exit 0
+        xcrun simctl spawn booted /bin/sh -c '
+          pwd
+          echo "hello"
+        ' 2>/dev/null || true

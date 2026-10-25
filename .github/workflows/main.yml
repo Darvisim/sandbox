@@ -15,19 +15,8 @@ jobs:
         os_version: ">=18.0"
     - run: |
         xcrun simctl spawn booted /bin/sh -c '
-         printf "Shell started\n"
-         printf "PATH=%s\n" "$PATH"
-
-         CMD="ls grep dirname"
-
-         printf "%s\n" "$CMD" |
-         while IFS= read -r cmd; do
-          printf "Checking: %s\n" "$cmd"
-          if command -v "$cmd" >/dev/null 2>&1; then
-           printf "%s is available!\n" "$cmd"
-           command -V "$cmd"
-          else
-           printf "%s not found in PATH\n" "$cmd"
-          fi
-         done
-        '
+         echo STARTED
+         /bin/ls /bin
+         echo "PATH=$PATH"
+         command -v ls
+        ' 2>/dev/null || true

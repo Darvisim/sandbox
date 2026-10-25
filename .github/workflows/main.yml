@@ -16,7 +16,4 @@ jobs:
     - run: |
         xcrun simctl spawn booted /bin/sh -c '
          echo STARTED
-         /bin/ls /bin
-         echo "PATH=$PATH"
-         command -v ls
         ' 2>/dev/null || true

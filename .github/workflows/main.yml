@@ -15,5 +15,6 @@ jobs:
         os_version: ">=18.0"
     - run: |
         xcrun simctl spawn booted /bin/sh -c '
-         echo STARTED
+         pwd
+         echo "hello"
         ' 2>/dev/null || true

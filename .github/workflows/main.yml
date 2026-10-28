@@ -18,5 +18,4 @@ jobs:
         xcrun simctl spawn booted /bin/sh -c '
           pwd
           echo "hello"
-        ' > log.txt 2>&1
-        cat log.txt
+        ' 2>&1

@@ -15,7 +15,7 @@ jobs:
         os_version: ">=18.0"
         wait_for_boot: true
     - run: |
-        xcrun simctl spawn booted /bin/sh -c '
+        xcrun simctl spawn booted env -u DYLD_ROOT_PATH -u DYLD_LIBRARY_PATH /bin/sh -c '
           pwd
           echo "hello"
-        ' 2>/dev/null
+        '

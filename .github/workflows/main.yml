@@ -18,4 +18,4 @@ jobs:
         xcrun simctl spawn booted /bin/sh -c '
           pwd
           echo "hello"
-        ' 2>&1
+        ' 2>/dev/null
